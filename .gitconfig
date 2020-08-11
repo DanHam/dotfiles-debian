@@ -1,0 +1,25 @@
+[color]
+	ui = auto
+[core]
+	editor = /usr/bin/vim
+	excludesfile = $HOME/.gitignore
+[push]
+	default = simple
+[user]
+	name = DanHam
+	email = DanHam@users.noreply.github.com
+	signingKey = D6AA987E
+[credential]
+	helper = /home/dan/.local/bin/pass-git-helper
+	usehttppath = true
+[status]
+    submodulesummary = 1
+[diff]
+    tool = vimdiff
+[difftool]
+    prompt = false
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+[mergetool]
+    prompt = false

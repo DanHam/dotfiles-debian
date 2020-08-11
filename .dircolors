@@ -1,0 +1,548 @@
+# Configuration file for dircolors, a utility to help you set the
+# LS_COLORS environment variable used by GNU ls with the --color option.
+# Copyright (C) 1996-2016 Free Software Foundation, Inc.
+# Copying and distribution of this file, with or without modification,
+# are permitted provided the copyright notice and this notice are preserved.
+# The keywords COLOR, OPTIONS, and EIGHTBIT (honored by the
+# slackware version of dircolors) are recognized but ignored.
+# Below are TERM entries, which can be a glob patterns, to match
+# against the TERM environment variable to determine if it is colorizable.
+#
+# Terminal Types {{{1
+# Note: Do not use wildcard globs in the list below - some systems do not
+# expand them
+TERM Eterm
+TERM ansi
+TERM color-xterm
+TERM con132x25
+TERM con132x30
+TERM con132x43
+TERM con132x60
+TERM con80x25
+TERM con80x28
+TERM con80x30
+TERM con80x43
+TERM con80x50
+TERM con80x60
+TERM cons25
+TERM console
+TERM cygwin
+TERM dtterm
+TERM eterm-color
+TERM gnome
+TERM gnome-256color
+TERM hurd
+TERM jfbterm
+TERM konsole
+TERM kterm
+TERM linux
+TERM linux-c
+TERM mach-color
+TERM mach-gnu-color
+TERM mlterm
+TERM putty
+TERM putty-256color
+TERM rxvt
+TERM rxvt-256color
+TERM rxvt-cygwin
+TERM rxvt-cygwin-native
+TERM rxvt-unicode
+TERM rxvt-unicode-256color
+TERM rxvt-unicode256
+TERM screen
+TERM screen-256color
+TERM screen-256color-bce
+TERM screen-bce
+TERM screen-w
+TERM screen.Eterm
+TERM screen.rxvt
+TERM screen.linux
+TERM st
+TERM st-256color
+TERM terminator
+TERM vt100
+TERM xterm
+TERM xterm-16color
+TERM xterm-256color
+TERM xterm-88color
+TERM xterm-color
+TERM xterm-debian
+#}}}
+# Core Types {{{1
+# Below are the color init strings for the basic file types. A color init
+# string consists of one or more of the following numeric codes:
+# Attribute codes:
+# 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
+# Text color codes:
+# 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
+# Background color codes:
+# 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
+#NORMAL 00 # no color code at all
+#FILE 00 # regular file: use no color at all
+RESET 0 # reset to "normal" color
+DIR 01;34 # directory
+LINK 01;36 # symbolic link. (If you set this to 'target' instead of a
+ # numerical value, the color is as for the file pointed to.)
+MULTIHARDLINK 00 # regular file with more than one link
+FIFO 40;33 # pipe
+SOCK 01;35 # socket
+DOOR 01;35 # door
+BLK 40;33;01 # block device driver
+CHR 40;33;01 # character device driver
+ORPHAN 40;31;01 # symlink to nonexistent file, or non-stat'able file ...
+MISSING 00 # ... and the files they point to
+SETUID 37;41 # file that is setuid (u+s)
+SETGID 30;43 # file that is setgid (g+s)
+CAPABILITY 30;41 # file with capability
+STICKY_OTHER_WRITABLE 30;42 # dir that is sticky and other-writable (+t,o+w)
+OTHER_WRITABLE 33;42 # dir that is other-writable (o+w) and not sticky
+STICKY 37;44 # dir with the sticky bit set (+t) and not other-writable
+# This is for files with execute permission:
+EXEC 01;32
+# }}}
+# File Types {{{1
+# Archives or compressed {{{2
+.7z                     01;31
+.Z                      01;31
+.ace                    01;31
+.alz                    01;31
+.arc                    01;31
+.arj                    01;31
+.bz                     01;31
+.bz2                    01;31
+.cab                    01;31
+.cpio                   01;31
+.deb                    01;31
+.dz                     01;31
+.ear                    01;31
+.gz                     01;31
+.jar                    01;31
+.lha                    01;31
+.lrz                    01;31
+.lz                     01;31
+.lz4                    01;31
+.lzh                    01;31
+.lzma                   01;31
+.lzo                    01;31
+.rar                    01;31
+.rpm                    01;31
+.rz                     01;31
+.sar                    01;31
+.t7z                    01;31
+.tar                    01;31
+.taz                    01;31
+.tbz                    01;31
+.tbz2                   01;31
+.tgz                    01;31
+.tlz                    01;31
+.txz                    01;31
+.tz                     01;31
+.tzo                    01;31
+.war                    01;31
+.xz                     01;31
+.z                      01;31
+.zip                    01;31
+.zoo                    01;31
+# }}}
+# Images and Virtual Disks {{{2
+.iso                    38;5;124
+.nrg                    38;5;124
+.qcow                   38;5;124
+.sparseimage            38;5;124
+.vmdk                   38;5;124
+# }}}
+# Image formats {{{2
+.JPG                    01;35
+.TIFF                   01;35
+.bmp                    01;35
+.cdr                    01;35
+.gif                    01;35
+.ico                    01;35
+.jpeg                   01;35
+.jpg                    01;35
+.nth                    01;35
+.png                    01;35
+.svg                    01;35
+.tiff                   01;35
+.xpm                    01;35
+# }}}
+# Video {{{2
+.IFO                    38;5;114
+.MOV                    38;5;114
+.VOB                    38;5;114
+.avi                    38;5;114
+.divx                   38;5;114
+.m2v                    38;5;114
+.m4v                    38;5;114
+.mkv                    38;5;114
+.mov                    38;5;114
+.mp4                    38;5;114
+.mpeg                   38;5;114
+.mpg                    38;5;114
+.ogm                    38;5;114
+.ogv                    38;5;114
+.ogx                    38;5;114
+.rmvb                   38;5;114
+.sample                 38;5;114
+.vob                    38;5;114
+.wmv                    38;5;114
+# }}}
+# Mobile/Streaming {{{2
+.3g2                    38;5;115
+.3gp                    38;5;115
+.asf                    38;5;115
+.f4v                    38;5;115
+.flv                    38;5;115
+.gp3                    38;5;115
+.gp4                    38;5;115
+.ogv                    38;5;115
+.ts                     38;5;115
+.webm                   38;5;115
+# }}}
+# Fonts {{{2
+.afm                    38;5;66
+.pfb                    38;5;66
+.pfm                    38;5;66
+.ttf                    38;5;66
+.otf                    38;5;66
+.PFA                    38;5;66
+.pfa                    38;5;66
+# }}}
+# Audio Formats {{{2
+.3ga                    38;5;137;1
+.S3M                    38;5;137;1
+.aac                    38;5;137;1
+.alac                   38;5;137;1
+.ape                    38;5;137;1
+.au                     38;5;137;1
+.dat                    38;5;137;1
+.dts                    38;5;137;1
+.fcm                    38;5;137;1
+.flac                   38;5;137;1
+.m4a                    38;5;137;1
+.mid                    38;5;137;1
+.midi                   38;5;137;1
+.mka                    38;5;137;1
+.mod                    38;5;137;1
+.mp3                    38;5;137;1
+.mpc                    38;5;137;1
+.oga                    38;5;137;1
+.ogg                    38;5;137;1
+.ogg                    38;5;137;1
+.opus                   38;5;137;1
+.ra                     38;5;137;1
+.s3m                    38;5;137;1
+.sid                    38;5;137;1
+.spx                    38;5;137;1
+.wav                    38;5;137;1
+.wv                     38;5;137;1
+.wvc                    38;5;137;1
+.xspf                   38;5;137;1
+# }}}
+# Databases {{{2
+.accdb                  38;5;60
+.accde                  38;5;60
+.accdr                  38;5;60
+.accdt                  38;5;60
+.db                     38;5;60
+.localstorage           38;5;60
+.sqlite                 38;5;60
+.typelib                38;5;60
+# }}}
+# Temporary and Backup Files {{{2
+# Undo files
+.orig                   38;5;241
+.un~                    38;5;241
+# Backups
+.BUP                    38;5;241
+.bak                    38;5;241
+.o                      38;5;241
+.rlib                   38;5;241
+# Temporary files
+.sassc                  38;5;244
+.swo                    38;5;244
+.swp                    38;5;244
+.tmp                    38;5;244
+# State files
+.pid                    38;5;248
+.state                  38;5;248
+*lockfile               38;5;248
+# Error logs
+.err                    38;5;160;1
+.error                  38;5;160;1
+.stderr                 38;5;160;1
+# State dumps
+.dump                   38;5;241
+.stackdump              38;5;241
+.zcompdump              38;5;241
+.zwc                    38;5;241
+# }}}
+# Network Trace and Dump {{{2
+.cap                    38;5;29
+.dmp                    38;5;29
+.pcap                   38;5;29
+# }}}
+# Encrypted  data {{{2
+.asc                    38;5;192
+.asc                    38;5;192
+.enc                    38;5;192
+.enc                    38;5;192
+.gpg                    38;5;192
+.p12                    38;5;192
+.pem                    38;5;192
+.pgp                    38;5;192
+.sig                    38;5;192
+.sig                    38;5;192
+.signature              38;5;192
+.signature              38;5;192
+# }}}
+# Emulators {{{2
+.32x                    38;5;213
+.cdi                    38;5;213
+.fm2                    38;5;213
+.rom                    38;5;213
+.sav                    38;5;213
+.st                     38;5;213
+# Atari
+.A64                    38;5;213
+.a00                    38;5;213
+.a52                    38;5;213
+.a64                    38;5;213
+.a78                    38;5;213
+.adf                    38;5;213
+.atr                    38;5;213
+# Nintendo
+.gb                     38;5;213
+.gba                    38;5;213
+.gbc                    38;5;213
+.gel                    38;5;213
+.gg                     38;5;213
+.ggl                    38;5;213
+.ipk                    38;5;213
+.j64                    38;5;213
+.nds                    38;5;213
+.nes                    38;5;213
+# Sega
+.sms                    38;5;213
+# }}}
+# Documents {{{2
+# Readme type docs
+*AUTHORS                38;5;220;1
+*CHANGES                38;5;220;1
+*CONTRIBUTORS           38;5;220;1
+*COPYING                38;5;220;1
+*COPYRIGHT              38;5;220;1
+*HISTORY                38;5;220;1
+*INSTALL                38;5;220;1
+*LICENSE                38;5;220;1
+*NOTICE                 38;5;220;1
+*PATENTS                38;5;220;1
+*README                 38;5;220;1
+*VERSION                38;5;220;1
+# Plain-text
+.log                    38;5;241
+.txt                    38;5;241
+#}}}
+# Binary Documents {{{2
+.cbr                  38;5;141
+.cbz                  38;5;141
+.chm                  38;5;141
+.djvu                 38;5;141
+.pdf                  38;5;141
+.PDF                  38;5;141
+# }}}
+# Markup {{{2
+.etx                  38;5;184
+.info                 38;5;184
+.markdown             38;5;184
+.md                   38;5;184
+.mkd                  38;5;184
+.nfo                  38;5;184
+.pod                  38;5;184
+.tex                  38;5;184
+.textile              38;5;184
+# }}}
+# Key-Value, Non-Relational Data {{{2
+.json                 38;5;178
+.msg                  38;5;178
+.pgn                  38;5;178
+.rss                  38;5;178
+.xml                  38;5;178
+.yml                  38;5;178
+.yaml                 38;5;178
+# }}}
+# Word, Office, Postscript {{{2
+.doc                  38;5;111
+.docm                 38;5;111
+.docx                 38;5;111
+.eps                  38;5;111
+.odb                  38;5;111
+.odt                  38;5;111
+.ps                   38;5;111
+# }}}
+# Presentation {{{2
+.odp                  38;5;166
+.pps                  38;5;166
+.ppt                  38;5;166
+# }}}
+# Spreadsheet {{{2
+.csv                  38;5;78
+#   Open document spreadsheet
+.ods                  38;5;112
+.xla                  38;5;76
+#   Excel spreadsheet
+.xls                  38;5;112
+.xlsx                 38;5;112
+#   Excel spreadsheet with macros
+.xlsxm                38;5;112
+#   Excel module
+.xltm                 38;5;73
+.xltx                 38;5;73
+# }}}
+# Configuration Files {{{2
+*cfg                  38;5;241
+*conf                 38;5;241
+*rc                   38;5;241
+.ini                  38;5;241
+# }}}
+# Code {{{2
+# Version control {{{3
+.git                  38;5;197
+.gitattributes        38;5;240
+.gitignore            38;5;240
+.gitmodules           38;5;240
+# }}}
+# Build stuff {{{3
+*MANIFEST               38;5;242
+*Makefile               38;5;155
+*pm_to_blib             38;5;242
+.SKIP                   38;5;244
+.am                     38;5;242
+.hin                    38;5;242
+.in                     38;5;242
+.m4                     38;5;242
+.old                    38;5;242
+.out                    38;5;242
+.scan                   38;5;242
+# }}}
+# Shell {{{3
+.awk                  38;5;172
+.bash                 38;5;172
+.bat                  38;5;172
+.BAT                  38;5;172
+.sed                  38;5;172
+.sh                   38;5;172
+.zsh                  38;5;172
+.vim                  38;5;172
+# }}}
+# Interpreted {{{3
+.ahk                  38;5;29
+# Python
+.py                   38;5;29
+.doctest              38;5;166
+.rst                  38;5;241
+# Perl
+.pl                   38;5;29
+# SQL
+.msql                 38;5;222
+.mysql                38;5;222
+.pgsql                38;5;222
+.sql                  38;5;222
+# Tool Command Language
+.tcl                  38;5;64;1
+# }}}
+# Compiled {{{3
+# Assembly Language
+.asm                  38;5;81
+# LISP
+.cl                   38;5;81
+.lisp                 38;5;81
+# Lua
+.lua                  38;5;81
+# Moonscript
+.moon                 38;5;81
+# C
+.c                    38;5;81
+.C                    38;5;81
+.h                    38;5;110
+.H                    38;5;110
+.tcc                  38;5;110
+# C++
+.c++                  38;5;81
+.h++                  38;5;110
+.hpp                  38;5;110
+.hxx                  38;5;110
+.ii                   38;5;110
+# Method file for Objective C
+.M                    38;5;110
+.m                    38;5;110
+# Csharp
+.cc                   38;5;81
+.cs                   38;5;81
+.cp                   38;5;81
+.cpp                  38;5;81
+.cxx                  38;5;81
+# Crystal
+.cr                   38;5;81
+# Google golang
+.go                   38;5;81
+# Fortran
+.f                    38;5;81
+.f77                  38;5;81
+.for                  38;5;81
+.ftn                  38;5;81
+# Pascal
+.s                    38;5;110
+.S                    38;5;110
+# Rust
+.rs                   38;5;81
+# ?
+.sx                   38;5;81
+# Interface file in GHC
+.hi                   38;5;110
+# Haskell
+.hs                   38;5;81
+# }}}
+# Byte compiled {{{3
+.PL                   38;5;160
+.pyc                  38;5;240
+# }}}
+# HTML {{{3
+.css                  38;5;125;1
+.eml                  38;5;125;1
+.htm                  38;5;125;1
+.html                 38;5;125;1
+.jhtm                 38;5;125;1
+.less                 38;5;125;1
+.mht                  38;5;125;1
+.mustache             38;5;125;1
+.sass                 38;5;125;1
+.scss                 38;5;125;1
+# }}}
+# Java {{{3
+.coffee               38;5;074;1
+.java                 38;5;074;1
+.js                   38;5;074;1
+.jsm                  38;5;074;1
+.jsm                  38;5;074;1
+.jsp                  38;5;074;1
+# }}}
+# PHP {{{3
+.php                  38;5;81
+# CakePHP view scripts and helpers
+.ctp                  38;5;81
+# Twig template engine
+.twig                 38;5;81
+# }}}
+# Patch files {{{3
+.diff                   01;31
+.patch                  01;31
+#}}}
+# Visual Basic {{{3
+.vb                   38;5;81
+.vba                  38;5;81
+.vbs                  38;5;81
+# }}}
+# }}}
+# }}}
+# vim: fdm=marker
