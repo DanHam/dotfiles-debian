@@ -201,6 +201,27 @@ if command -v istioctl &>/dev/null; then
     unset istioctl_completions
 fi
 
+# Hugo
+if command -v hugo &>/dev/null; then
+    # Completions
+    hugo_completions_dir="${HOME}/.bash_completion.d/hugo"
+    hugo_completions="${hugo_completions_dir}/hugo.bash"
+    [ ! -d "${hugo_completions_dir}" ] && mkdir -p "${hugo_completions_dir}"
+    if [ ! -e "${hugo_completions}" ]; then
+        hugo gen autocomplete --completionfile="${hugo_completions}" \
+            &>/dev/null
+    fi
+    source "${hugo_completions}"
+    unset hugo_completions
+    # Manpages
+    hugo_man_dir="${HOME}/.local/share/man/man1"
+    [ ! -d "${hugo_man_dir}" ] && mkdir -p "${hugo_man_dir}"
+    if ! ls "${hugo_man_dir}"/hugo* &>/dev/null; then
+        hugo gen man --dir ${hugo_man_dir} &>/dev/null
+    fi
+    unset hugo_man_dir
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
