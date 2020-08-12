@@ -11,7 +11,7 @@
     signingKey = D6AA987E
 [credential]
     helper = /home/dan/.local/bin/pass-git-helper
-    usehttppath = true
+    useHttpPath = true
 [alias]
     unstage = reset HEAD --
     last = log -1 HEAD
@@ -26,3 +26,5 @@
     conflictstyle = diff3
 [mergetool]
     prompt = false
+[pull]
+    rebase = false
