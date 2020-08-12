@@ -113,6 +113,11 @@ export LESS_TERMCAP_ue=$'\e[0m'           # end underline
 # GPG Settings
 export GPG_TTY=$(tty)
 
+# Set up rbenv
+if command -v rbenv &>/dev/null; then
+    eval "$(rbenv init -)"
+fi
+
 # Enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
