@@ -16,6 +16,14 @@ fi
 # Include all commands in path for convenience with sudo
 PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
 
+# Include rbenv and ruby-build binaries in the path
+if [ -e "$HOME/.rbenv/bin/rbenv" ]; then
+    PATH="$HOME/.rbenv/bin:$PATH"
+    if [ -e "$HOME/.rbenv/plugins/ruby-build/bin/ruby-build" ]; then
+        PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+    fi
+fi
+
 # Set Go path and add the Go bin directory to the system path
 export GOPATH=/home/dan/working/go
 export PATH=$PATH:${GOPATH}/bin
