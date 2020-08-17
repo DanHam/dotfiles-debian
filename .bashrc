@@ -222,6 +222,11 @@ if command -v hugo &>/dev/null; then
     unset hugo_man_dir
 fi
 
+# Terraform
+if command -v terraform &>/dev/null; then
+    complete -C "$(command -v terraform)" terraform
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
