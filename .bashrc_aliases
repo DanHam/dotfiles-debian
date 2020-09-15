@@ -1,4 +1,6 @@
 # ~/.bashrc_aliases
+alias ansible-inventory='gpg-connect-agent updatestartuptty /bye &>/dev/null && ansible-inventory'
+alias ansible-playbook='gpg-connect-agent updatestartuptty /bye &>/dev/null && ansible-playbook'
 alias bpython3='bpython-3.4 --config=~/.config/bpython/config.conf'
 alias bpython='bpython --config=~/.config/bpython/config.conf'
 alias c='clear'
