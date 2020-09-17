@@ -234,3 +234,11 @@ fi
 if [ -f "${HOME}/.bashrc_aliases" ]; then
     source "${HOME}/.bashrc_aliases"
 fi
+
+# Functions
+
+if command -v pandoc &>/dev/null; then
+    md () {
+        pandoc -t plain "$1" | less
+    }
+fi
