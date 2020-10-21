@@ -58,6 +58,7 @@ set smartindent     " Turn on smartindent
 set regexpengine=1  " Use the old regex engine as its faster with Ruby
 set lazyredraw      " Don't redraw the screen while executing marcos etc
 
+set maxmempattern=2000 " set max memory in kb to use for pattern matching
 set undolevels=1000 " set max number of changes that can be undone
 set updatecount=50  " set chars before vim writes recovery swapfile to disk
 set history=1000    " Number of commands to remember
