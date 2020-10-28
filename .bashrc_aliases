@@ -46,7 +46,7 @@ alias valgrind='valgrind --track-origins=yes'
 
 # Completions for aliases
 if type -t __start_kubectl &>/dev/null; then
-    complete -F __start_kubectl k
+    complete -f -F __start_kubectl k
 else
     echo '__start_kubectl func not found'
 fi
