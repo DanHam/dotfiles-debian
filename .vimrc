@@ -153,6 +153,10 @@ command! WQ     wq
 " Rebind <Leader> key
 let mapleader = ","
 
+" Faster Scrolling
+map <C-k> 5k
+map <C-j> 5j
+
 " Map sort function to key
 vnoremap <Leader>s :sort<CR>
 
