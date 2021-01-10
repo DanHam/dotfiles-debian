@@ -4,15 +4,7 @@
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-filetype off
-
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
-
 " Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
 set nocompatible
 
 " --------------------------------------------------------------------------
@@ -20,7 +12,10 @@ set nocompatible
 " --------------------------------------------------------------------------
 
 filetype on         " Automatic file type detection
+syntax on           " Always use syntax highlighting
 
+set autoindent      " Automatically indent code to match the last line
+set smartindent     " Same as above but do it smart
 set showcmd         " Display incomplete commands
 set showmatch       " Show matching brackets.
 set tabstop=4       " Number of spaces diplayed for a tab
@@ -32,6 +27,7 @@ set nowrap          " Deactivate wrapping
 set textwidth=75    " Text auto breaks after 75 characters
 set modeline        " Enable modeline
 set encoding=utf-8  " Set default encoding
+set hlsearch        " Highlight all matches found when searching
 
 set wildmenu        " Show zsh like menu for tab autocompletes
 set ruler           " Show the cursor position all the time
@@ -69,6 +65,29 @@ set confirm         " Get a dialog when :q, :w, :wq etc fails
 set incsearch       " Do incremental searching
 set undofile        " Keep an undo file (undo changes after closing)
 set backup          " Keep backup files
+
+" --------------------------------------------------------------------------
+" Settings for better performance with plugins such as Coc and YouCompleteMe
+" --------------------------------------------------------------------------
+
+set cmdheight=2       " More space for messages below the status bar
+set updatetime=300    " Shorter updatetime gives a better user experience
+set shortmess+=c      " Don't pass messages to |ins-completion-menu|
+set signcolumn=number " Configure the signcolumn (left of number column) to
+                      " always be dislayed otherwise text is shifted when
+                      " diagnostics are dislayed/resolved
+
+set ttymouse=sgr       " Allow popup diplays on mouse hover
+set completeopt+=popup " Completion menu to display additional info via popup
+set balloondelay=500   " Milliseconds to delay before showing popup menu
+
+" Configure completion menu popup settings
+set completepopup=align:menu,border:off,highlight:Pmenu
+
+
+" --------------------------------------------------------------------------
+" Undo, Swap and Backup settings
+" --------------------------------------------------------------------------
 
 " Enable persistent undo, and put undo files in their own directory to
 " prevent pollution of project directories
@@ -109,39 +128,12 @@ endif
 " Set the dir, falling back to /var/tmp in case the above failed
 set dir=~/.vim/swap,/var/tmp
 
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-  set mouse=a
-endif
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-endif
-
 " --------------------------------------------------------------------------
 " Folding
 " --------------------------------------------------------------------------
 
 if has('folding') |
-    " Fix for issue with Go files and tab. See:
-    " https://github.com/govim/govim/issues/656#issuecomment-573089241
-    " https://github.com/vim/vim/issues/5454
-    " https://github.com/neoclide/coc.nvim/issues/1048
-    "
-    " For Go files the foldmethod must be set to manual or Vim errors:
-    " E967: text property info corrupted
-    " This is fixed in Vim >= 8.2.0109
-    if has("autocmd") |
-        autocmd Filetype *
-                \   if &ft == "go" |
-                \       setlocal foldmethod=manual |
-                \   else |
-                \       setlocal foldmethod=syntax |
-                \   endif
-    endif
+    setlocal foldmethod=syntax     " Use syntax for folding
     setlocal foldlevel=99          " Auto folding occurs for folds above num
     setlocal foldnestmax=10        " Allow this many folds within folds
     setlocal foldcolumn=2          " Display a column for folding
@@ -171,43 +163,16 @@ vnoremap <space> za
 nnoremap <Leader><space> zA
 vnoremap <Leader><space> zA
 
-" Fast switching between buffers
-nnoremap <Leader>, :bp<CR>
-nnoremap <Leader>. :bn<CR>
-
 " Easier moving of highlighted code blocks in visual mode - This prevents
 " loss of visual highlight on change of indent
 vnoremap < <gv
 vnoremap > >gv
-
-" Don't use Ex mode, use Q for formatting
-map Q gq
-
-" Faster scrolling using ctrl
-map <C-j> 5j
-map <C-k> 5k
-map <C-h> 5h
-map <C-l> 5l
 
 " Paste mode toggle. Helps avoid unexpected effects when pasting into vim
 map <C-p> :set invpaste<CR>
 
 " Show line numbers toggle
 map <Leader>l :set invnumber<CR>
-
-" Quick method of dismissing syntastic checks and error
-nnoremap <Leader>e :SyntasticReset<CR>
-
-" Toggle NERDTree
-map <C-n> :NERDTreeToggle<CR>
-
-" Y should have the same behaviour as D e.g. yank to end, but instead works
-" like yy. Fix here:
-map Y y$
-
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -238,30 +203,6 @@ if has("autocmd")
 
   augroup END
 
-  " smartindent:
-  " By default When typing '#' as the first character in a new line, the
-  " indent for that line is removed and the '#' is put in the first column.
-  " If you don't want this, use this mapping:
-  "
-  " :inoremap # X^H#
-  "
-  " where ^H is entered with CTRL-V CTRL-H.
-  " When using the '>>' command, lines starting with '#' are not shifted
-  " right.
-  autocmd FileType python,php,vim inoremap # X#
-
-else
-
-  set autoindent        " Always set autoindenting on
-
-endif " has("autocmd")
-
-" Convenient command to see the difference between the current buffer and
-" the file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
-if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-          \ | wincmd p | diffthis
 endif
 
 if has('langmap') && exists('+langnoremap')
@@ -272,63 +213,64 @@ if has('langmap') && exists('+langnoremap')
 endif
 
 " --------------------------------------------------------------------------
-" Plugins settings
+" Vim-Plug: Install the Plugin Manager
 " --------------------------------------------------------------------------
-
-" Pathogen
-" https://github.com/tpope/vim-pathogen
 "
-" Manage your 'runtimepath' with ease. In practical terms, pathogen.vim
-" makes it super easy to install plugins and runtime files in their own
-" private directories.
-" All plugins extracted to a subdirectory under ~/.vim/bundle will be added to
-" the 'runtimepath' automatically
-call pathogen#infect()      " Load Pathogen Plugins
-call pathogen#helptags()    " Generate documentation for Plugins
-
-" Automatically managed plugins:
+" Manage all plugins with vim-plug
+"       - https://github.com/junegunn/vim-plug
+"       - A minimalist Vim plugin manager
 "
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+  \| endif
+
+" --------------------------------------------------------------------------
+" Vim-Plug: Auto install plugins and apply settings
+" --------------------------------------------------------------------------
+call plug#begin('~/.vim/plugged')
+
 " neos-irblack
 "       - https://github.com/DanHam/neos-irblack.git
 "       - A custom version of the Vim IR Black colour scheme
 "       - The main theme must be loaded first so that all other plugins
 "         that set some form of highlighting can take effect
 "
-" Set the theme
-colorscheme neos_irblack
-" Let vim know we are using a dark console/transparent with dark background
-set background=dark
+Plug 'DanHam/neos-irblack'
 "
 
-" ansible-vim
-"       - https://github.com/pearofducks/ansible-vim.git
-"       - A VIM syntax plugin for Ansible 2.0
-"       - Supports playbooks, Jinja2 templates and Ansibles host files
-"       - When the file type is not automatically detected use the
-"         following stanza at the head of the file:
-"         # vim: ft=ansible:
+" Coc vim
+"       - https://github.com/neoclide/coc.nvim
+"       - Intellisense engine for Vim8 & Neovim
+"       - Full language server protocol support as VSCode
+"       - NOTE: The Coc.nvim plugin is manually loaded based on the
+"         filetype - see the 'Manual Plugin Management' section below. This
+"         ensures the Coc plugin doesn't interfere with YouCompleteMe.
+"         YouCompleteMe is used for 'c' and 'go' filetypes. Coc is used for
+"         everything else.
 "
-" Highlighting for attributes. Available flags are:
-"   a: highlight all instances of key=
-"   o: highlight only instances of key= found on newlines
-"   d: dim the instances of key= found
-"   b: brighten the instances of key= found
-"   n: turn off this highlight completely
-let g:ansible_attribute_highlight = 'ab'
-" Highlight for additional keywords
-let g:ansible_extra_keywords_highlight = 1
+Plug 'neoclide/coc.nvim', {'on': []}
 "
-
-" jedi-vim:
-"       - https://github.com/davidhalter/jedi-vim
-"       - Awesome Python autocompletion with VIM
-"       - Required jedi to be installed from macports or recursive clone
-"         of the jedi-vim repo (includes jedi)
-"
+let g:coc_global_extensions =
+    \ [
+    \ 'coc-yaml',
+    \ 'coc-json',
+    \ 'coc-sh',
+    \ 'coc-markdownlint',
+    \ 'coc-pyright'
+    \ ]
 
 " nerdcommenter
 "       - https://github.com/scrooloose/nerdcommenter.git
 "       - Vim plugin for intensely orgasmic commenting
+"
+Plug 'scrooloose/nerdcommenter'
 "
 " Set to insert spaces after left comment delimiter and before right comment
 " delimiter e.g. /* With Spaces */ as opposed to /*Without Spaces*/ and
@@ -343,49 +285,6 @@ if has("autocmd")
 endif
 "
 
-" nerdtree
-"       - https://github.com/scrooloose/nerdtree.git
-"       - The NERD tree allows you to explore your filesystem and to open
-"         files and directories.
-"
-" Set mouse click behaviour: single click to open directories, double for
-" files
-let g:NERDTreeMouseMode=2
-" Set to auto close the NERDTree pane when a file is opened
-let g:NERDTreeQuitOnOpen=1
-"
-
-" syntastic:
-"       - https://github.com/scrooloose/syntastic.git
-"       - Syntastic is a syntax checking plugin for Vim that runs files
-"         through external syntax checkers and displays any resulting
-"         errors to the user.
-"
-" Fill the error location-list with errors found by the checkers
-let g:syntastic_always_populate_loc_list = 1
-" Allow auto open/close of the error window
-let g:syntastic_auto_loc_list = 1
-" Whether to invoke checkers when the file is opened
-let g:syntastic_check_on_open = 0
-" Whether to invoke checkers when we write/quit
-let g:syntastic_check_on_wq = 0
-" Enable rubocop (gem install rubocop) and default mri checkers for ruby
-let g:syntastic_ruby_checkers = ['rubocop', 'mri']
-" Disable checkers for java. This prevents the appearance of a really
-" annoying pop-up on OS X prompting you to install a JDK because the javac
-" command line tool was not found!
-let g:syntastic_java_checkers = ['']
-" Settings for Go and integration with vim-go
-let g:syntastic_go_checkers = ['golint', 'go-vet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']}
-"
-
-" Tabular
-"       - https://github.com/godlygeek/tabular.git
-"       - A plugin for automatic alignment of text
-"       - See http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
-"
-
 " vim-better-whitespace:
 "       - https://github.com/ntpeters/vim-better-whitespace.git
 "       - This plugin causes all trailing whitespace characters (spaces and
@@ -393,6 +292,8 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']}
 "         be highlighted while in insert mode.
 "       - A helper function :StripWhitespace is also provided to make
 "         whitespace cleaning painless.
+"
+Plug 'ntpeters/vim-better-whitespace'
 "
 " Set to auto strip trailing whitespace on file save
 autocmd BufWritePre * StripWhitespace
@@ -402,10 +303,35 @@ autocmd BufWritePre * StripWhitespace
 "       - https://github.com/tpope/vim-endwise.git
 "       - A plugin that helps to end certain structures automatically
 "
+Plug 'tpope/vim-endwise'
+"
 
-" vim-fugitive
-"       - https://github.com/tpope/vim-fugitive
-"       - Git wrapper for vim
+" vim-indent-guides
+"       - https://github.com/nathanaelkane/vim-indent-guides.git
+"       - Visually display indent levels in Vim
+"
+Plug 'nathanaelkane/vim-indent-guides'
+"
+" Override the default colours
+let g:indent_guides_auto_colors = 0
+"
+
+" supertab:
+"       - https://github.com/ervandew/supertab.git
+"       - Supertab is a vim plugin which allows you to use <Tab> for all
+"         your insert completion needs (:help ins-completion).
+"
+Plug 'ervandew/supertab'
+"
+let g:SuperTabDefaultCompletionType = '<C-n>'
+"
+
+" delimitMate
+"       - https://github.com/Raimondi/delimitMate.git
+"       - delimitMate provides automatic closing of quotes, parenthesis,
+"         brackets, and so on.
+"
+Plug 'Raimondi/delimitMate'
 "
 
 " vim-go
@@ -414,90 +340,42 @@ autocmd BufWritePre * StripWhitespace
 "       - Run :GoInstallBinaries to install the required Go Tools
 "       - Install YouCompleteMe for auto completion
 "
-" Additional Go syntax highlighting
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-" Fix problem with location list window (that contains the output of
-" commands from :GoBuild, :GoTest etc) not appearing when Syntastic is
-" also installed
-let g:go_list_type = "quickfix"
-" Run GoFmt on save
-let g:go_fmt_command = "gofmt"
-" Use gopls for :GoDef and :GoInfo
-let g:go_def_mode = "gopls"
-let g:go_info_mode = "gopls"
-" Auto display function signatures, types etc
-let g:go_auto_type_info = 1
-"
-
-" vim-markdown-folding
-"       - https://github.com/nelstrom/vim-markdown-folding.git
-"       - This plugin enables folding by section headings in markdown
-"         documents.
-"
-" Prefer the nested style of folding; Can be toggled with :FoldToggle
-let g:markdown_fold_style = 'nested'
-"
-
-" vim-ps1
-"       - https://github.com/PProvost/vim-ps1.git
-"       - Provides nice syntax coloring and indenting for Windows
-"         PowerShell (.ps1) files, and also includes a filetype plugin so
-"         Vim can autodetect your PS1 scripts.
-"
-
-" vim-puppet
-"       - https://github.com/rodjek/vim-puppet.git
-"       - Make vim more Puppet friendly!
-"       - Formatting based on Puppetlabs Style Guide
-"       - Syntax highlighting
-"       - Automatic => alignment (when the Tabular plugin is installed)
-"
-
-" vim-ruby
-"       - https://github.com/vim-ruby/vim-ruby.git
-"       - Vim configuration files for editing and compiling Ruby within Vim
-"
-
-" vim-terraform
-"       - https://github.com/hashivim/vim-terraform.git
-"       - Adds a :Terraform command that runs terraform, with tab
-"         completion of subcommands
-"       - Sets up *.tf, *.tfvars, and *.tfstate files to be highlighted as
-"         HCL, HCL, and JSON respectively
-"       - Adds a :TerraformFmt command that runs terraform fmt against the
-"         current buffer
-"       - Set g:terraform_fmt_on_save to 1 to run terraform fmt
-"         automatically when saving *.tf or *.tfvars files
-"
-" Run terraform fmt automatically when saving a *.tf or *.tfvars file
-let g:terraform_fmt_on_save = 1
-"
-
-" vim-indent-guides
-"       - https://github.com/nathanaelkane/vim-indent-guides.git
-"       - Visually display indent levels in Vim
-"
-" Override the default colours
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=232
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=234
-"
-
-" bats.vim
-"       - https://github.com/aliou/bats.vim.git
-"       - Adds syntax highlighting for Bats test files
-"
+if executable('go')
+    Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': 'go'}
+    "
+    " Additional Go syntax highlighting
+    let g:go_highlight_array_whitespace_error = 1
+    let g:go_highlight_build_constraints = 1
+    let g:go_highlight_chan_whitespace_error = 1
+    let g:go_highlight_extra_types = 1
+    let g:go_highlight_fields = 1
+    let g:go_highlight_function_calls = 1
+    let g:go_highlight_functions = 1
+    let g:go_highlight_interfaces = 1
+    let g:go_highlight_operators = 1
+    let g:go_highlight_space_tab_error = 1
+    let g:go_highlight_structs = 1
+    let g:go_highlight_trailing_whitespace_error = 1
+    let g:go_highlight_types = 1
+    " Run GoFmt on save
+    let g:go_fmt_command = "gofmt"
+    " Use gopls for :GoDef and :GoInfo
+    let g:go_def_mode = "gopls"
+    let g:go_info_mode = "gopls"
+    " Auto display function signatures, types etc
+    let g:go_auto_type_info = 1
+    "
+endif
 
 " YouCompleteMe
 "       - https://github.com/ycm-core/YouCompleteMe.git
 "       - A code completion engine for Vim
+"       - Cannot be installed automatically with vim-plug - see
+"         https://github.com/junegunn/vim-plug/wiki/faq#youcompleteme-timeout
 "
-" Explicitly set the path to the Python2 interpreter
+Plug '~/.vim/plugged/YouCompleteMe', { 'for': ['go', 'c', 'cpp'] }
+"
+" Explicitly set the path to the Python interpreter
 let g:ycm_server_python_interpreter = '/usr/bin/python3.7'
 " Configure YCM to look in strings and comments for words that it should
 " offer to auto-complete. This is required for auto-completion to work
@@ -514,12 +392,16 @@ let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 " Explicitly set the path to the .ycm_extra_conf.py file
-let g:ycm_global_ycm_extra_conf = '/home/dan/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+" Show the diagnostics ui
+let g:ycm_show_diagnostics_ui = 1
 "
 
 " UltiSnips
 "       - https://github.com/SirVer/ultisnips.git
 "       - The ultimate snippet tool for Vim
+"
+Plug 'SirVer/ultisnips'
 "
 " Set the Ultisnip edit window to open either vertically or horizontally
 " depending on context
@@ -528,28 +410,37 @@ let g:UltiSnipsEditSplit = "context"
 " defined snippets (~/.vim/local-snippets)
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "local-snippets"]
 " Key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<C-Space>"
+let g:UltiSnipsExpandTrigger = "<C-space>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
-" supertab:
-"       - https://github.com/ervandew/supertab.git
-"       - Supertab is a vim plugin which allows you to use <Tab> for all
-"         your insert completion needs (:help ins-completion).
+" vim-snippets
+"       - https://github.com/honza/vim-snippets
+"       - Snippet collection for use with UltiSnips
 "
-"
-let g:SuperTabDefaultCompletionType = '<C-n>'
+Plug 'honza/vim-snippets'
 "
 
-" delimitMate
-"       - https://github.com/Raimondi/delimitMate.git
-"       - delimitMate provides automatic closing of quotes, parenthesis,
-"         brackets, and so on.
-"
+" --------------------------------------------------------------------------
+" vim-plug: end auto plugin management
+" --------------------------------------------------------------------------
+call plug#end()
 
-" vim-toml
-"       - Vim syntax for TOML
-"       - https://github.com/cespare/vim-toml
+" --------------------------------------------------------------------------
+" Manual Plugin Management
+" --------------------------------------------------------------------------
+
+" Conditionally load the Coc plugin based on the filetypes we (don't) use
+" Coc for. Put another way - load Coc for every filetype other than those
+" listed
+augroup load_coc
+    autocmd!
+    autocmd Filetype *
+                \ if &ft != "go" && &ft != "c" && &ft != "cpp" |
+                \     call plug#load('coc.nvim') |
+                \     autocmd! load_coc |
+                \ endif
+augroup END
 
 " --------------------------------------------------------------------------
 " Language settings
@@ -566,18 +457,37 @@ if has("autocmd") && exists("+omnifunc")
             \	endif
 endif
 
+" C and C++ formatting on save
+" function! Formatonsave()
+"   let g:clang_format_style = '{BasedOnStyle: llvm, BreakBeforeBraces: Linux}'
+"   let g:clang_format_all = 1
+"   py3file ~/.vim/helpers/clang-format.py
+" endfunction
+" autocmd BufWritePre *.h,*.cc,*.c,*.cpp call Formatonsave()
+
 " --------------------------------------------------------------------------
-" Local overrides of main Vim Theme
+" Colorscheme
 " --------------------------------------------------------------------------
 
-" Main theme 'ir-black' is loaded by pathogen: see above
+" Main theme 'ir-black' is loaded by vim-plug
+
+" Set the theme
+colorscheme neos_irblack
+" Let vim know we are using a dark console/transparent with dark background
+set background=dark
+
+" --------------------------------------------------------------------------
+" Local overrides of main Vim Theme and custom theme settings
+" --------------------------------------------------------------------------
 
 " vim-better-whitespace
 " Set to highlight whitespace in green rather than the default red
 hi ExtraWhitespace ctermbg=green
 
-" Highlight current selection in omnicomplete popup menu
-hi PMenuSel ctermfg=green ctermbg=236
+" vim-indent-guides
+" Set the colors for the indent markers
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=232
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=234
 
 " Create a (faint grey) ruler at max line width
 if exists('+colorcolumn') |
@@ -592,7 +502,6 @@ if exists('+colorcolumn') |
     endif
 endif
 
-
 " Set colours for folding
 if has('folding')
     " Set colour for the fold text
@@ -601,11 +510,6 @@ if has('folding')
     hi foldcolumn ctermfg=24 ctermbg=none
 endif
 
-" NERDTree highlighting
-hi NERDTreeDir ctermfg=blue ctermbg=none
-hi NERDTreeCWD ctermfg=grey ctermbg=none
-hi NERDTreeExecFile ctermfg=green ctermbg=none
-
 " Highlight current line
 set cursorline
 " Adjust colours for the line itself and line number highlighting
@@ -613,17 +517,9 @@ hi CursorLine cterm=none ctermbg=none
 hi CursorLineNr ctermfg=226 ctermbg=none
 
 " Set a custom highlight group for use with the statusline
-if &t_Co>2 && &t_Co<=16
-    " For basic color terminals
-    hi User1 ctermbg=grey ctermfg=green guibg=grey guifg=green
-    hi User2 ctermbg=grey ctermfg=blue  guibg=grey guifg=blue
-    hi User3 ctermbg=grey ctermfg=red   guibg=grey guifg=red
-elseif &t_Co>16
-    " For terminals with 256 color support
-    hi User1 ctermbg=235 ctermfg=208 guibg=#262626 guifg=#ff8700
-    hi User2 ctermbg=235 ctermfg=27  guibg=#262626 guifg=#005fff
-    hi User3 ctermbg=235 ctermfg=160 guibg=#262626 guifg=#d70000
-endif
+hi User1 ctermbg=235 ctermfg=208
+hi User2 ctermbg=235 ctermfg=27
+hi User3 ctermbg=235 ctermfg=160
 
 " Now create the status line
 set statusline=                                 " Clear default statusline
@@ -639,6 +535,3 @@ set statusline+=%=                              " Left/right separator
 set statusline+=%c,                             " Cursor column
 set statusline+=%l/%L                           " Cursor line/total lines
 set statusline+=\ %P                            " Percent through file
-set statusline+=%#warningmsg#                   " Syntastic warning messages
-set statusline+=%{SyntasticStatuslineFlag()}    " Syntastic status
-set statusline+=%*                              " Syntastic status
