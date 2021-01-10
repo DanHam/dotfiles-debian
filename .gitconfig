@@ -1,7 +1,7 @@
 [color]
     ui = auto
 [core]
-    editor = /usr/bin/vim
+    editor = vim
     excludesfile = $HOME/.gitignore
 [push]
     default = simple
