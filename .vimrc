@@ -425,6 +425,23 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 Plug 'honza/vim-snippets'
 "
 
+" vim-terraform
+"       - https://github.com/hashivim/vim-terraform.git
+"       - Adds a :Terraform command that runs terraform, with tab
+"         completion of subcommands
+"       - Sets up *.tf, *.tfvars, and *.tfstate files to be highlighted as
+"         HCL, HCL, and JSON respectively
+"       - Adds a :TerraformFmt command that runs terraform fmt against the
+"         current buffer
+"       - Set g:terraform_fmt_on_save to 1 to run terraform fmt
+"         automatically when saving *.tf or *.tfvars files
+"
+Plug 'hashivim/vim-terraform'
+"
+" Run terraform fmt automatically when saving a *.tf or *.tfvars file
+let g:terraform_fmt_on_save = 1
+"
+
 " --------------------------------------------------------------------------
 " vim-plug: end auto plugin management
 " --------------------------------------------------------------------------
