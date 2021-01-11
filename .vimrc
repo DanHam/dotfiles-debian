@@ -154,8 +154,10 @@ command! WQ     wq
 let mapleader = ","
 
 " Faster Scrolling
-map <C-k> 5k
-map <C-j> 5j
+nmap <C-k> 5k
+nmap <C-j> 5j
+nmap <C-h> 5h
+nmap <C-l> 5l
 
 " Map sort function to key
 vnoremap <Leader>s :sort<CR>
