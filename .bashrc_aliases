@@ -4,6 +4,7 @@ alias ansible-playbook='gpg-connect-agent updatestartuptty /bye &>/dev/null && a
 alias bpython3='bpython-3.4 --config=~/.config/bpython/config.conf'
 alias bpython='bpython --config=~/.config/bpython/config.conf'
 alias c='clear'
+alias cat='bat'
 alias cnano='nano -T 2'
 alias cp='cp -iv'
 alias diff='diff -s'
@@ -43,6 +44,8 @@ alias ssh='gpg-connect-agent updatestartuptty /bye &>/dev/null && ssh'
 alias sudo='A=`alias` sudo '
 alias tree='tree -AC'
 alias valgrind='valgrind --track-origins=yes'
+alias vim='nvim'
+alias vimdiff='nvim -d'
 
 # Completions for aliases
 if type -t __start_kubectl &>/dev/null; then
