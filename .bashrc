@@ -177,9 +177,10 @@ if [ -f "${packer_completions}" ]; then
 fi
 unset packer_completions
 
-# kubectl command completions
+# kubectl command completions and shortcuts
 if command -v kubectl &>/dev/null; then
     source <(kubectl completion bash)
+    export do='--dry-run=client -o yaml'
 fi
 
 # Terraform
