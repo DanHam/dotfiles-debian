@@ -228,6 +228,10 @@ if command -v terraform &>/dev/null; then
     complete -C "$(command -v terraform)" terraform
 fi
 
+# fzf - Auto added by install of fzf from vim-plug
+# See install/uninstall scripts in ~/.fzf for info
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
