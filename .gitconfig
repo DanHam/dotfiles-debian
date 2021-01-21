@@ -1,7 +1,7 @@
 [color]
     ui = auto
 [core]
-    editor = vim
+    editor = nvim
     excludesfile = $HOME/.gitignore
 [push]
     default = simple
@@ -18,13 +18,17 @@
 [status]
     submodulesummary = 1
 [diff]
-    tool = vimdiff
+    tool = nvimdiff
 [difftool]
     prompt = false
+[difftool "nvimdiff"]
+    cmd = nvim -d "$LOCAL" "$REMOTE"
 [merge]
-    tool = vimdiff
+    tool = nvimdiff
     conflictstyle = diff3
 [mergetool]
     prompt = false
+[mergetool "nvimdiff"]
+    cmd = nvim -d "$BASE" "$LOCAL" "$REMOTE" "$MERGED" -c '$wincmd w' -c 'wincmd J'
 [pull]
     rebase = false
