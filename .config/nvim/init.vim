@@ -163,6 +163,12 @@ Plug 'junegunn/fzf', {
     \ }
 Plug 'junegunn/fzf.vim'
 
+" vim-visual-multi
+"       - https://github.com/mg979/vim-visual-multi
+"       - Provides multi-line editing
+"
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
 " --------------------------------------------------------------------------
 " vim-plug: end auto plugin management
 " --------------------------------------------------------------------------
@@ -263,6 +269,15 @@ let g:terraform_fmt_on_save = 1
 "
 let g:clang_format#code_style = "llvm"
 let g:clang_format#style_options = { "BreakBeforeBraces": "Linux" }
+
+" vim-visual-multi
+"
+" Suppress warning from VM about delimitMate overriding <BS>
+let g:VM_show_warnings = 0
+" Set leader to something more friendly
+let g:VM_leader = '\'
+" Set the highlighting theme
+let g:VM_theme = 'spacegray'
 
 " --------------------------------------------------------------------------
 " Basic Editor settings
