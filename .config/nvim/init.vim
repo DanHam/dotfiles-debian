@@ -3,6 +3,41 @@
 " Maintainer:   Daniel Hamilton
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Requirements:
+"
+"   LocalDebianPackages:
+"
+"   - Neovim 0.4.4
+"   - bat ('musl' deb package from: https://github.com/sharkdp/bat/releases)
+"
+"   DebianPackages:
+"
+"   Base:
+"   - build-essential
+"   - curl
+"   - git
+"   - nodejs (see https://nodejs.org/en/download/package-manager for repo)
+"
+"   C:
+"   - clang-format
+"   - exuberant-ctags
+"
+"   Golang:
+"   - golang-go (from buster-backports)
+"
+"   PythonProvider:
+"   - python3-minimal
+"   - python3-pip
+"   - python3-setuptools
+"   - python3-wheel
+"
+" AdditionalSetup:
+"
+"   OptionalPython3Provider:
+"   python3 -m pip install --user --upgrade pynvim
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " --------------------------------------------------------------------------
 " Vim-Plug: Install the Plugin Manager
