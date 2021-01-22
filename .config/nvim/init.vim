@@ -504,18 +504,18 @@ endfunc
 "
 " Auto show documentation for symbol under cursor in pop up
 nnoremap <silent> <leader>h :call CocActionAsync('doHover')<cr>
-" Remap <C-Down> and <C-Up> for scroll float windows/popups.
-nnoremap <silent><nowait><expr> <C-Down>
+" Remap <C-c> and <C-d> for scroll float windows/popups.
+nnoremap <silent><nowait><expr> <C-c>
     \ coc#float#has_scroll() ? coc#float#scroll(1,1) : "\<C-f>"
-nnoremap <silent><nowait><expr> <C-Up>
+nnoremap <silent><nowait><expr> <C-d>
     \ coc#float#has_scroll() ? coc#float#scroll(0,1) : "\<C-b>"
-inoremap <silent><nowait><expr> <C-Down>
+inoremap <silent><nowait><expr> <C-c>
     \ coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1,1)\<cr>" : "\<Right>"
-inoremap <silent><nowait><expr> <C-Up>
+inoremap <silent><nowait><expr> <C-d>
     \ coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0,1)\<cr>" : "\<Left>"
-vnoremap <silent><nowait><expr> <C-Down>
+vnoremap <silent><nowait><expr> <C-c>
     \ coc#float#has_scroll() ? coc#float#scroll(1,1) : "\<C-f>"
-vnoremap <silent><nowait><expr> <C-Up>
+vnoremap <silent><nowait><expr> <C-d>
     \ coc#float#has_scroll() ? coc#float#scroll(0,1) : "\<C-b>"
 
 " nerdtree
