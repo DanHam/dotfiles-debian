@@ -1,0 +1,2 @@
+# Add man pages for npm and npm modules
+MANPATH_MAP   /usr/bin     /usr/lib/node_modules/npm/man
